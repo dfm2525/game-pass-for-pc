@@ -3,7 +3,9 @@ import re
 import json
 import datetime
 import subprocess
+import os
 
+path = os.path.dirname(os.path.realpath(__file__))
 
 data = requests.get(
     'https://reco-public.rec.mp.microsoft.com/channels/Reco/v8.0/lists/collection/pcgaVTaz?itemTypes=Devices&DeviceFamily=Windows.Desktop&market=US&language=EN&count=200').json()
@@ -18,7 +20,7 @@ url = 'https://displaycatalog.mp.microsoft.com/v7.0/products?bigIds=' + \
     idstring+'&market=US&languages=en-us&MS-CV=1234'
 productData = requests.get(url).json()
 
-with open('pcgames.json', 'r') as file:
+with open(path+'/pcgames.json', 'r') as file:
     previousData = json.loads(file.read())
 
 for product in productData['Products']:
@@ -55,12 +57,13 @@ if outjson != prevjson:
     with open('pcgames.json', 'w+') as out:
         out.write(json.dumps(output))
     process = subprocess.Popen(
-        ["git", "add", "pcgames.json"], stdout=subprocess.PIPE)
+        ["git", "add", "pcgames.json"], stdout=subprocess.PIPE, cwd=path)
     print(process.communicate()[0])
     process = subprocess.Popen(
-        ["git", "commit", "-m", '"updated list"'], stdout=subprocess.PIPE)
+        ["git", "commit", "-m", '"updated list"'], stdout=subprocess.PIPE, cwd=path)
     print(process.communicate()[0])
-    process = subprocess.Popen(["git", "push"], stdout=subprocess.PIPE)
+    process = subprocess.Popen(
+        ["git", "push"], stdout=subprocess.PIPE, cwd=path)
     print(process.communicate()[0])
 
 print(donestr)
