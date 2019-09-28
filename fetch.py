@@ -2,6 +2,8 @@ import requests
 import re
 import json
 import datetime
+import subprocess
+
 
 data = requests.get(
     'https://reco-public.rec.mp.microsoft.com/channels/Reco/v8.0/lists/collection/pcgaVTaz?itemTypes=Devices&DeviceFamily=Windows.Desktop&market=US&language=EN&count=200').json()
@@ -12,7 +14,8 @@ for item in data['Items']:
 output = []
 
 idstring = (",").join(gameids)
-url = 'https://displaycatalog.mp.microsoft.com/v7.0/products?bigIds='+idstring+'&market=US&languages=en-us&MS-CV=1234'
+url = 'https://displaycatalog.mp.microsoft.com/v7.0/products?bigIds=' + \
+    idstring+'&market=US&languages=en-us&MS-CV=1234'
 productData = requests.get(url).json()
 
 with open('pcgames.json', 'r') as file:
@@ -51,5 +54,13 @@ if outjson != prevjson:
     donestr = "done, changes found"
     with open('pcgames.json', 'w+') as out:
         out.write(json.dumps(output))
+    process = subprocess.Popen(
+        ["git", "add", "pcgames.json"], stdout=subprocess.PIPE)
+    print(process.communicate()[0])
+    process = subprocess.Popen(
+        ["git", "commit", "-m", '"updated list"'], stdout=subprocess.PIPE)
+    print(process.communicate()[0])
+    process = subprocess.Popen(["git", "push"], stdout=subprocess.PIPE)
+    print(process.communicate()[0])
 
 print(donestr)
