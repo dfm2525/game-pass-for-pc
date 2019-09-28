@@ -58,7 +58,7 @@ if outjson != prevjson:
         ["git", "add", "pcgames.json"], stdout=subprocess.PIPE)
     print(process.communicate()[0])
     process = subprocess.Popen(
-        ["git", "commit", "-m", '"updated list"'], stdout=subprocess.PIPE)
+        ["git", "commit", "-m", "updated list"], stdout=subprocess.PIPE)
     print(process.communicate()[0])
     process = subprocess.Popen(["git", "push"], stdout=subprocess.PIPE)
     print(process.communicate()[0])
