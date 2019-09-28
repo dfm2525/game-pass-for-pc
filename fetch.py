@@ -12,7 +12,7 @@ for item in data['Items']:
 output = []
 
 idstring = (",").join(gameids)
-url = f'https://displaycatalog.mp.microsoft.com/v7.0/products?bigIds={idstring}&market=US&languages=en-us&MS-CV=1234'
+url = 'https://displaycatalog.mp.microsoft.com/v7.0/products?bigIds='+idstring+'&market=US&languages=en-us&MS-CV=1234'
 productData = requests.get(url).json()
 
 with open('pcgames.json', 'r') as file:
