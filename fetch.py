@@ -54,7 +54,7 @@ prevjson = json.dumps(previousData)
 donestr = "done, no changes"
 if outjson != prevjson:
     donestr = "done, changes found"
-    with open('pcgames.json', 'w+') as out:
+    with open(path+'/pcgames.json', 'w+') as out:
         out.write(json.dumps(output))
     process = subprocess.Popen(
         ["git", "pull"], stdout=subprocess.PIPE, cwd=path)
