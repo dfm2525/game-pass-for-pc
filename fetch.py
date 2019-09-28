@@ -57,6 +57,9 @@ if outjson != prevjson:
     with open('pcgames.json', 'w+') as out:
         out.write(json.dumps(output))
     process = subprocess.Popen(
+        ["git", "pull"], stdout=subprocess.PIPE, cwd=path)
+    print(process.communicate()[0])
+    process = subprocess.Popen(
         ["git", "add", "pcgames.json"], stdout=subprocess.PIPE, cwd=path)
     print(process.communicate()[0])
     process = subprocess.Popen(
