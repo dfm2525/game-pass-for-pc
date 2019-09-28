@@ -1,0 +1,10 @@
+.center {
+    margin: auto;
+    width: 1000px;
+    height: calc(100vh - 100px);
+    padding: 10px;
+}
+
+.unreleased {
+    color: red;
+}
